@@ -57,7 +57,7 @@ export default {
 
 Furthermore, we can directly access the contents of the `ErrorBoundary` component's `errorCaptured` hook either throw a callback or Vue's emit.
 
-## Callbacks via on-error
+### Callbacks via on-error
 
 The `ErrorBoundary` can receive a callback function through the `on-error` prop.
 
