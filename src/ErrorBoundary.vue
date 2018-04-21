@@ -31,11 +31,12 @@ export default {
     if (this.stopPropagation) return false
   },
   render (h) {
-    if (this.error) {
-      return h(this.fallBack)
+    if (!this.$slots.default.length) {
+      console.warn('ErrorBoundary component must have child components.')
+      return null
     }
 
-    return this.$slots.default[0]
+    return this.error ? h(this.fallBack) : this.$slots.default[0]
   }
 }
 </script>
