@@ -11,6 +11,10 @@ export default {
     onError: {
       type: Function,
       default: null
+    },
+    stopPropagation: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -19,12 +23,12 @@ export default {
     }
   },
   errorCaptured (err, vm, info = '') {
-    if (this.onError) {
-      this.onError(err, vm, info)
-    }
-
     this.error = true
     this.$emit('errorCaptured', { err, vm, info })
+
+    if (this.onError) this.onError(err, vm, info)
+
+    if (this.stopPropagation) return false
   },
   render (h) {
     if (this.error) {
