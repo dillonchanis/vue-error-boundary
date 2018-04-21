@@ -1,5 +1,5 @@
 # vue-error-boundary
-Reusable error boundary component for catching JavaScript errors and displaying fallback UIs.
+A reusable error boundary component for catching JavaScript errors and displaying fallback UIs.
 
 The ErrorBoundary component is based on [React's example component](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html) featuring a new component method in React 16 called `componentDidCatch`.
 
