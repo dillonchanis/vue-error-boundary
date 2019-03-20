@@ -15,6 +15,9 @@ export default {
     stopPropagation: {
       type: Boolean,
       default: false
+    },
+    param: {
+      type: Object
     }
   },
   data () {
@@ -36,7 +39,9 @@ export default {
       return null
     }
 
-    return this.error ? h(this.fallBack) : this.$slots.default[0]
+    return this.error ? h(this.fallBack, {props : {
+      param
+    }}) : this.$slots.default[0]
   }
 }
 </script>
