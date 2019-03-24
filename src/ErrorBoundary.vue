@@ -1,6 +1,16 @@
 <script>
 import DefaultFallback from './DefaultFallback.vue'
 
+const isObjectEmpty = obj => Object.entries(obj).length === 0 && obj.constructor === Object
+const warn = msg => console.warn(msg)
+
+// https://github.com/posva/vue-promised/blob/master/src/index.js
+const convertVNodeArray = (h, wrapperTag, nodes) => {
+  // for arrays and single text nodes
+  if (nodes.length > 1 || !nodes[0].tag) return h(wrapperTag, {}, nodes)
+  return nodes[0]
+}
+
 export default {
   name: 'ErrorBoundary',
   props: {
@@ -12,31 +22,79 @@ export default {
       type: Function,
       default: null
     },
+    params: {
+      type: Object,
+      default: () => {}
+    },
     stopPropagation: {
       type: Boolean,
       default: false
+    },
+    tag: {
+      type: String,
+      default: 'span'
     }
   },
-  data () {
+  data() {
     return {
-      error: null
-    }
+      err: '',
+      info: '',
+      hasError: null
+    };
   },
-  errorCaptured (err, vm, info = '') {
-    this.error = true
+  errorCaptured(err, vm, info = '') {
+    this.hasError = true
+    this.err = err
+    this.info = info
     this.$emit('errorCaptured', { err, vm, info })
 
     if (this.onError) this.onError(err, vm, info)
 
     if (this.stopPropagation) return false
   },
-  render (h) {
-    if (!this.$slots.default.length) {
-      console.warn('ErrorBoundary component must have child components.')
-      return null
+  render(h) {
+    const content = this.$slots.default
+    const isScoped = this.$scopedSlots.boundary
+    let scopedSlot
+
+    if (isScoped) {
+      scopedSlot = this.$scopedSlots.boundary({
+        hasError: this.hasError,
+        err: this.err,
+        info: this.info
+      })
     }
 
-    return this.error ? h(this.fallBack) : this.$slots.default[0]
+    const fallbackOrScoped = isScoped
+      ? scopedSlot
+      : h(this.fallBack, {
+        props: {...this.params}
+      })
+    
+    if (this.hasError) {
+      return Array.isArray(fallbackOrScoped) 
+        ? convertVNodeArray(h, this.tag, fallbackOrScoped) 
+        : fallbackOrScoped
+    } 
+
+    if (isScoped) {
+      if (!this.$scopedSlots.boundary()) {
+        warn('ErrorBoundary component must have child components.')
+        return null
+      }
+      return Array.isArray(scopedSlot)
+        ? convertVNodeArray(h, this.tag, scopedSlot)
+        : scopedSlot
+    }
+      
+    if (isObjectEmpty(this.$slots)) {
+      warn('ErrorBoundary component must have child components.')
+      return null;
+    }
+
+    return Array.isArray(content) 
+      ? convertVNodeArray(h, this.tag, content) 
+      : content
   }
 }
 </script>

@@ -1,7 +1,7 @@
 {
   "name": "vue-error-boundary",
   "author": "Dillon Chanis <dillonchanis92@gmail.com> (http://dillonchanis.com/)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A reusable error boundary component for catching JavaScript errors and displaying fallback UIs.",
   "main": "dist/vue-error-boundary.cjs.min.js",
   "unpkg": "dist/vue-error-boundary.min.js",
