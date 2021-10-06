@@ -1,0 +1,40 @@
+{
+  "name": "vue-error-boundary",
+  "author": "Dillon Chanis <dillonchanis92@gmail.com> (http://dillonchanis.com/)",
+  "version": "2.0.0",
+  "description": "A reusable error boundary component for catching JavaScript errors and displaying fallback UIs.",
+  "files": ["dist"],
+  "main": "./dist/vue-error-boundary.umd.js",
+  "module": "./dist/vue-error-boundary.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-error-boundary.es.js",
+      "require": "./dist/vue-error-boundary.umd.js"
+    }
+  },
+  "repository": {
+    "url": "dillonchanis/vue-error-boundary",
+    "type": "git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "error",
+    "error handling",
+    "error boundary"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.16"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.2",
+    "typescript": "^4.4.3",
+    "vite": "^2.6.0",
+    "vue-tsc": "^0.3.0"
+  }
+}
