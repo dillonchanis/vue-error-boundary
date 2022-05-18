@@ -26,6 +26,16 @@ To use this component simply wrap any other component which may throw an Error. 
 </VErrorBoundary>
 ```
 
+If you are using it inside a `v-for`, ensure to set the `stop-propagation` prop on your `VErrorBoundary` component.
+
+```html
+<div v-for="...">
+  <VErrorBoundary stop-propagation>
+    ...
+  </VErrorBoundary>
+</div>
+```
+
 ## Props
 
 | Attribute        | Description  | Type | Required | Default |
@@ -166,7 +176,7 @@ We can also listen to a Vue event via an `errorCaptured` event.
 
 ```html
 <template>
-  <ErrorBoundary @error-captured="handleError">...</ErrorBoundary>
+  <VErrorBoundary @error-captured="handleError">...</VErrorBoundary>
 </template>
 
 <script>
@@ -185,9 +195,9 @@ methods: {
 The `errorCaptured` hook will continue to propagate errors up the component tree unless it returns `false`.  Doing so will stop any additional `errorCaptured` hooks to execute **and** the global `errorHandler` from being invoked for the error.  To do this we can use the `stop-propagation` prop.
 
 ```html
-<ErrorBoundary stop-propagation>
+<VErrorBoundary stop-propagation>
   ...
-</ErrorBoundary>
+</VErrorBoundary>
 ```
 
 ## Contributors
