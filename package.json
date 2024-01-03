@@ -10,6 +10,7 @@
   "module": "./dist/vue-error-boundary.es.js",
   "exports": {
     ".": {
+      "types": "./dist/src/VErrorBoundary.d.ts",
       "import": "./dist/vue-error-boundary.es.js",
       "require": "./dist/vue-error-boundary.umd.js"
     }
